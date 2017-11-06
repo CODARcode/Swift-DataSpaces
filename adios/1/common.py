@@ -14,7 +14,7 @@ class TempFile(object):
         try:
             if self.fh:
                 os.close(self.fh)
-                # os.remove(self.path)
+                os.remove(self.path)
         except:
             pass
 
