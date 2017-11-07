@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+# ADIOS-COPY
+# Shell wrapper
+
+THIS=$( cd $( dirname $0 ) ; /bin/pwd )
+python $THIS/adios-copy.py $*
