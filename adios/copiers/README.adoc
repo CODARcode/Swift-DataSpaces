@@ -4,10 +4,13 @@
 Copies data to/from ADIOS files to/from text files.
 
 Usage:
+
 ----
 $ adios-copy <URL1> <URL2>
 ----
+
 where the URLs are either:
+
 . Unix filenames or
 . ADIOS URLs of the form adios:filename:group:variable where:
 +
