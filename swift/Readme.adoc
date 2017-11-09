@@ -1,0 +1,85 @@
+
+= Swift-DataSpaces Integration
+
+The point of this module is to demonstrate tight integration between Swift/T and DataSpaces, allowing Swift/T workflows to access DataSpaces efficiently through the DataSpaces C API.
+
+== Architecture
+
+. Swift/T can call directly into C functions if they have a Tcl wrapper
+. We use SWIG to generate these wrappers
+. We then can write Tcl programs that use DataSpaces
+. We can produce nice Swift/T functions that use the Tcl functions
+. Then we can write Swift/T workflows that access DataSpaces
+
+== File index
+
+SDS = Swift-DataSpaces
+
++sds.c+::
+Light wrapper around the DataSpaces init/put/get/finalize calls.  These functions simplify the API for SWIG
+
++sds.h+::
+The header for sds.c processed by SWIG
+
++sds.i+::
+SWIG input file- points to sds.h , creates Tcl extension wrapper sds_wrap.c
+
++Makefile+::
+Compiles sds.c and sds_wrap.c into libsds.so , which links against Tcl and DataSpaces.  Creates a loadable Tcl package.
+
++make-package.tcl+::
+Makes the Tcl package
+
++pkgIndex.tcl+::
+The Tcl package index
+
++test-ds.tcl+::
+Tests the Tcl sds package
+
++run-test-ds.tcl+::
+Runs test-sds.tcl
+
+=== WIP (ignore)
+
++sds.swift+::
+Swift/T wrappers for the Tcl functions
+
+== Usage
+
+=== New Swift/T
+
+. Check out Swift/T branch +dataspaces+
+. If Swift/T is already installed, just do +make install+ for ADLB and Turbine
+
+=== DataSpaces
+
+. Turn on DEBUG in dart/debug.h
+
+=== SDS
+
+. Edit Makefile to set Tcl and DataSpaces locations
+. Run +make+
+. Run +./run-test-ds.tcl+
+
+== Transcript
+
+----
+$ ./run-test-sds.tcl
+[0] dspaces_init
+[0] size: 2
+[1] -2080374779 from -2080374782
+[1] dspaces_init
+[1] size: 2
+[0] 'dc_register_at_master()': [dc_register_at_master]: Connected to the master server (140.221.10.225:54535).
+[1] 'dc_register_at_master()': [dc_register_at_master]: Connected to the master server (140.221.10.225:54535).
+...
+... hangs - dspaces_init() does not return
+----
+
+Analysis:
+
+. Tcl starts test-ds.tcl
+. turbine::init runs
+** This has been modified to call sds_init, the Tcl version of sds.c:sds_init()
+. sds_init() call dspaces_init() with hard-coded settings
+. rpc_process_event() loops forever

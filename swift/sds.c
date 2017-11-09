@@ -1,16 +1,34 @@
 
 /**
    sds.c   
-*/ 
+*/
 
 #include <dataspaces.h>
 
+#include <stdio.h>
 #include <string.h>
 
-void
-sds_init()
+#include "sds.h"
+
+#include <mpi.h>
+
+int
+sds_init(MPI_Comm comm, int nprocs)
 {
-  // dspaces_init(nprocs, 1, &gcomm, NULL);
+  printf("dspaces_init\n");
+  int id = 1;
+  int rank, size;
+  MPI_Comm_size(comm, &size);
+  printf("size: %i\n",size);
+  
+  int rc = dspaces_init(2, id, &comm, NULL);
+  if (rc != 0)
+  {
+    printf("dspaces_init failed!\n");
+    return 1;
+  }
+  printf("dspaces_init returned\n"); fflush(stdout);
+  return 0;
 }
 
 void
