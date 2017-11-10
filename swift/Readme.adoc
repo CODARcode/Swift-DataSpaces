@@ -64,7 +64,7 @@ Swift/T wrappers for the Tcl functions
 == Transcript
 
 ----
-$ ./run-test-sds.sh
+$ ./run-test-ds.sh
 [0] dspaces_init
 [0] size: 2
 [1] -2080374779 from -2080374782
