@@ -37,9 +37,13 @@ The Tcl package index
 Tests the Tcl sds package
 
 +run-test-ds.tcl+::
-Runs test-sds.tcl
+Runs test-ds.tcl
 
-=== WIP (ignore)
++run-test-sds-1.sh+::
+Runs the Swift/T test test-sds-1.swift
+
++test-sds-1.swift+::
+A simple Swift/T put/get test
 
 +sds.swift+::
 Swift/T wrappers for the Tcl functions
@@ -53,7 +57,7 @@ Swift/T wrappers for the Tcl functions
 
 === DataSpaces
 
-. Turn on DEBUG in dart/debug.h
+. May turn on DEBUG in dart/debug.h
 
 === SDS
 
@@ -61,25 +65,34 @@ Swift/T wrappers for the Tcl functions
 . Run +make+
 . Run +./run-test-ds.tcl+
 
-== Transcript
+== Transcripts
 
+=== Swift/T test
+
+----
+$ ./run-test-sds-1.sh
+dataspaces_server running: DS_SERVER_PID=19507
+[0] sds_kv_put: key1=value1
+[1] sds_kv_get: key1 (100)
+[1] sds_kv_got: key1=value1
+[0] trace: s: ,value1
+killing dataspaces_server
+----
+
+NOTE: We use the location syntax to force the put and get tasks to
+run on separate ranks.  You can simply comment out this syntax
+and the workflow will still work.
+
+=== Pure Tcl test
+
+In one shell, do:
+----
+$ dataspaces_server -s 1 -c 2
+----
+
+Then, in another shell, do:
 ----
 $ ./run-test-ds.sh
-[0] dspaces_init
-[0] size: 2
-[1] -2080374779 from -2080374782
-[1] dspaces_init
-[1] size: 2
-[0] 'dc_register_at_master()': [dc_register_at_master]: Connected to the master server (140.221.10.225:54535).
-[1] 'dc_register_at_master()': [dc_register_at_master]: Connected to the master server (140.221.10.225:54535).
-...
-... hangs - dspaces_init() does not return
 ----
 
-Analysis:
-
-. Tcl starts test-ds.tcl
-. turbine::init runs
-** This has been modified to call sds_init, the Tcl version of sds.c:sds_init()
-. sds_init() call dspaces_init() with hard-coded settings
-. rpc_process_event() loops forever
+NOTE: Kill and restart the server after each test.

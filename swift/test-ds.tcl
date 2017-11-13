@@ -11,7 +11,10 @@ turbine::init $servers "Swift"
 puts "turbine init ok"
 
 if { [ adlb::rank ] == 0 } {
-  puts send
+  sds_kv_put "mykey" "mydata"
+} else {
+  after 100
+  puts "tcl: [ sds_kv_get "mykey" 100 ]"
 }
 
 turbine::start rules
