@@ -5,9 +5,9 @@ import location;
 import sds;
 
 @location=locationFromRank(0)
-sds_kv_put("key1", "value1");
-
-s =
+sds_kv_put("key1", "value1")
+  =>
+  s =
   @location=locationFromRank(1)
   sds_kv_get("key1", 100);
 
