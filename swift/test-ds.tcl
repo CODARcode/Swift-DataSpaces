@@ -14,7 +14,7 @@ if { [ adlb::rank ] == 0 } {
   sds_kv_put "mykey" "mydata"
 } else {
   after 100
-  puts "tcl: [ sds_kv_get "mykey" 100 ]"
+  puts "tcl: [ sds_kv_get mykey 100 ]"
 }
 
 turbine::start rules
