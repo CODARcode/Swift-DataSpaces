@@ -1,7 +1,9 @@
 #!/bin/bash
 set -eu
 
-# RUN TEST DS
+# RUN TEST DS TCL
+
+# Runs the pure Tcl DS test
 
 source $( turbine -c )
 export TCLLIBPATH="$PWD $TURBINE_HOME/lib"
