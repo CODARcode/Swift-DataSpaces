@@ -26,7 +26,8 @@ def copier_read(filename, group, key):
 def copier_write(filename, group, key, value):
     g = ad.declare_group(group, "", ad.FLAG.YES)
     ad.define_var(g, key, "", ad.DATATYPE.string, "", "", "")
-    ad.select_method(g, "POSIX1", "", "")
+    # ad.select_method(g, "POSIX1", "", "")
+    ad.select_method(g, "DATASPACES", "", "")
     dtype = ad.adios2npdtype(ad.DATATYPE.string, len(str(value)))
     fd = ad.open(group, filename, "w")
     ad.write(fd, key, value, dtype)

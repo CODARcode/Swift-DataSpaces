@@ -1,6 +1,6 @@
 
 /**
-   sds.c   
+   sds.c
 */
 
 #include <dataspaces.h>
@@ -24,10 +24,10 @@ sds_init(MPI_Comm comm, int nprocs)
   int id = 1;
 
   setup_debug();
-  
+
   int mpi_size;
   MPI_Comm_size(comm, &mpi_size);
-  
+
   int rc = dspaces_init(mpi_size, id, &comm, NULL);
   if (rc != 0)
   {
@@ -79,7 +79,7 @@ sds_kv_get(const char* var_name, int max_size)
   return strdup(data);
 }
 
-void 
+void
 sds_finalize()
 {
   dspaces_finalize();
