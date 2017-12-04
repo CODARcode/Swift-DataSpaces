@@ -26,7 +26,7 @@ libsds.so: sds_wrap.o sds.o
 	$(CC) -shared -o $(@) $(^) \
 		$(LINKFLAGS)
 
-pkgIndex.tcl: libsds.so Makefile
+pkgIndex.tcl: libsds.so Makefile make-package.tcl
 	@echo TCLSH $(TCLSH)
 	LEAF_PKG=sds LEAF_VERSION=0.0 \
 	LEAF_SO=$(<) \
