@@ -1,5 +1,6 @@
 pkgIndex.tcl
 conf
+*.html
 *.so
 *.o
 *_wrap.c
