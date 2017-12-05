@@ -161,5 +161,6 @@ sds_kvf_get(const char* var_name, int max_size, const char* filename)
 void
 sds_finalize()
 {
+  debugf("calling dspaces_finalize()...");
   dspaces_finalize();
 }

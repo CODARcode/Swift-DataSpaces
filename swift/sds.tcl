@@ -12,3 +12,6 @@ proc sds_init_tcl { } {
 
 # Tell Turbine to initialize this module
 lappend turbine_init_cmds "sds_init_tcl"
+
+# Tell Turbine to finalize this module
+lappend turbine_final_cmds "sds_finalize"

@@ -29,6 +29,10 @@ echo "dataspaces_server running: DS_SERVER_PID=$DS_SERVER_PID"
 swift-t -l -n $CLIENTS test-sds-$T.swift
 
 echo "swift-t exited with success."
-echo "killing dataspaces_server..."
-kill -1 $DS_SERVER_PID
-echo "killed PID=$DS_SERVER_PID."
+sleep 1
+
+# Ensure dataspaces_server exited when Swift/T finalized the clients
+if [ -f /proc/$DS_SERVER_PID ]
+then
+  echo "warning: dataspaces_server (PID=$DS_SERVER_PID) is still up"
+fi
