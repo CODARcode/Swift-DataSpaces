@@ -5,11 +5,18 @@ The point of this module is to demonstrate tight integration between Swift/T and
 
 == Architecture
 
+=== Strategy
+
 . Swift/T can call directly into C functions if they have a Tcl wrapper
 . We use SWIG to generate these wrappers
 . We then can write Tcl programs that use DataSpaces
 . We can produce nice Swift/T functions that use the Tcl functions
 . Then we can write Swift/T workflows that access DataSpaces
+
+=== Process layout
+
+. The DataSpaces servers and Swift/T run as separate MPI programs
+. All Swift/T processes are considered DataSpaces clients, and all of them load/initialize the DataSpaces library.  However, only the workers will actually use the DataSpaces API to move data.
 
 == File index
 
