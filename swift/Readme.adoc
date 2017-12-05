@@ -65,6 +65,12 @@ Runs the Swift/T test test-sds-T.swift
 +test-sds-1.swift+::
 A simple Swift/T put/get test
 
++test-sds-2.swift+::
+A simple Swift/T file put/get test
+
++make-data.sh+::
+Data file maker: see header for usage
+
 == Usage
 
 === New Swift/T
