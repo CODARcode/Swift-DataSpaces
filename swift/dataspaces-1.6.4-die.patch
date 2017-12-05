@@ -1,0 +1,8 @@
+diff -r dataspaces-1.6.4-orig/src/ds_gspace.c dataspaces-1.6.4/src/ds_gspace.c
+1159a1160,1165
+>     if (strcmp(odsc->name, "die!") == 0)
+>     {
+>       printf("death requested!\n\n");
+>       exit(0);
+>     }
+> 
