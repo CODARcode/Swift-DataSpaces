@@ -59,8 +59,8 @@ Tests the Tcl sds package
 
 ==== Swift/T
 
-+run-test-sds-1.sh+::
-Runs the Swift/T test test-sds-1.swift
++run-test-sds.sh T+::
+Runs the Swift/T test test-sds-T.swift
 
 +test-sds-1.swift+::
 A simple Swift/T put/get test
@@ -82,7 +82,7 @@ A simple Swift/T put/get test
 . Edit Makefile to set Tcl and DataSpaces locations
 . Run +make+
 . Run +./run-test-ds.sh+
-. Run +./run-test-sds-1.sh+
+. Run +./run-test-sds.sh 1+
 
 == Transcripts
 
@@ -91,7 +91,8 @@ A simple Swift/T put/get test
 This test automatically starts/kills the server
 
 ----
-$ ./run-test-sds-1.sh
+$ ./run-test-sds.sh 1
+Running Swift/T test 1 ...
 dataspaces_server running: DS_SERVER_PID=19507
 [0] sds_kv_put: key1=value1
 [1] sds_kv_get: key1 (100)
