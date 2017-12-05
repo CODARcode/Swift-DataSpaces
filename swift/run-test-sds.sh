@@ -28,5 +28,7 @@ echo "dataspaces_server running: DS_SERVER_PID=$DS_SERVER_PID"
 # N ranks -> N-1 workers
 swift-t -l -n $CLIENTS test-sds-$T.swift
 
-echo "killing dataspaces_server"
+echo "swift-t exited with success."
+echo "killing dataspaces_server..."
 kill -1 $DS_SERVER_PID
+echo "killed PID=$DS_SERVER_PID."
