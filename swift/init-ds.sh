@@ -1,9 +1,10 @@
 #!/bin/sh
+set -eu
 
-# SETUP DS
+# INIT DS
 
-# Set up a DataSpaces run
+# Turbine init script to set up a DataSpaces run
 
+cp -v dataspaces.conf $TURBINE_OUTPUT
 cd $TURBINE_OUTPUT
-cp -v ~/dataspaces.conf .
 rm -f srv.lck conf *.log
