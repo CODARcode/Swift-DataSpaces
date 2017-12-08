@@ -4,11 +4,17 @@
 CC    = mpicc
 
 TCL_VERSION = 8.6
-TCL_HOME    = /usr
+# Ubuntu:
+# TCL_HOME    = /usr
+# Theta:
+TCL_HOME = /projects/Candle_ECP/swift/deps/tcl-8.6.6
 TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
-TCLSH = $(TCL_HOME)/bin/tclsh
+TCLSH = $(TCL_HOME)/bin/tclsh$(TCL_VERSION)
 
-DATASPACES = /home/wozniak/sfw/dataspaces-1.6.4
+# Dunedin:
+# DATASPACES = /home/wozniak/sfw/dataspaces-1.6.4
+# Theta:
+DATASPACES = /home/wozniak/Public/sfw/theta/dataspaces-1.6.4
 
 CPPFLAGS = -I $(TCL_INCLUDE) -I $(DATASPACES)/include
 CFLAGS = -fPIC
