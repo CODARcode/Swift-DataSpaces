@@ -20,6 +20,8 @@ fi
 N=$1
 OUTPUT=$2
 
+mkdir -pv $( dirname $OUTPUT )
+
 C=$(( 1024 / 5 )) # Using 5-character integers
 
 {
