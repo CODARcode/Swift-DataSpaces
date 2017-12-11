@@ -24,7 +24,7 @@ cd $THIS
 # Find the SDS package
 export SWIFT_PATH=$PWD
 # Set SDS debug logging
-export SDS_DEBUG=1
+# export SDS_DEBUG=1
 
 # Set up PATH
 PATH=/soft/jdk/1.8.0_51/bin:$PATH
@@ -46,9 +46,6 @@ then
   echo PROCS=$PROCS "!=" DS_CLIENTS=$DS_CLIENTS + DS_SERVERS=$DS_SERVERS
   exit 1
 fi
-
-# Number of DS key/value pairs
-N=$(( DS_CLIENTS * 10 ))
 
 set -x
 # Swift/T will actually run on DS_CLIENTS processes!
