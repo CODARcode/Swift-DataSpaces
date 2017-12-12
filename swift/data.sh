@@ -1,6 +1,9 @@
 #!/bin/sh
 set -eu
 
+# DATA SH
+# Extract performance data from output file
+
 if [ ${#} != 1 ]
 then
   echo "Provide OUTPUT file!"
