@@ -12,6 +12,7 @@ import sys;
 
 import make_data;
 
+printf("WORKFLOW: bench-3");
 printf("WORKERS=%i", turbine_workers());
 M = 10;
 printf("N=%i", M*turbine_workers());
@@ -25,7 +26,10 @@ MB = 1024*1024+1;
   s = "/tmp/bench-3/f-%i-%i.txt" % (a,b);
 }
 
-d = 1024;
+// For 3a: d=1
+// For 3b: d=1024
+d = 1;
+printf("DATA SIZE: %i", d);
 
 int W[];
 foreach j in [0:M-1]
