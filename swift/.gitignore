@@ -5,3 +5,6 @@ conf
 *.o
 *_wrap.c
 *.tic
+data*.txt
+turbine-directory.txt
+
