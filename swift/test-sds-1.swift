@@ -10,7 +10,7 @@ import location;
 import sds;
 
 @location=locationFromRank(0)
-sds_kv_put("key1", "value1")
+sds_kv_put("key1", "valueue1")
   =>
   s =
   @location=locationFromRank(1)
