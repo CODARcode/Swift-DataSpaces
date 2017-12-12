@@ -1,7 +1,7 @@
 
 /**
    BENCH 3 SWIFT
-   Simple put/get with bigger data
+   Simple put/get with /tmp caching
 */
 
 import files;
@@ -9,6 +9,8 @@ import io;
 import location;
 import sds;
 import sys;
+
+import make_data;
 
 printf("WORKERS=%i", turbine_workers());
 M = 10;
@@ -18,27 +20,23 @@ printf("N=%i", M*turbine_workers());
 
 MB = 1024*1024+1;
 
-app (void v) task(string f, int kb)
-{
-  (getenv("THIS")/"make-data.sh") 1 f ;
-  //  (getenv("THIS")/"probe.sh")
-}
-
 (string s) make_filename(int a, int b)
 {
   s = "/tmp/bench-3/f-%i-%i.txt" % (a,b);
 }
 
+d = 1024;
+
 int W[];
 foreach j in [0:M-1]
 {
-  int D[];
+  file D[];
   foreach r in [0:turbine_workers()-1]
   {
     name = make_filename(j,r);
     location L = locationFromRank(r);
-    v = @location=L task(name, 1) => {
-      D[r] = zero(v);
+    file f<name> = @location=L make_data(d) => {
+      D[r] = f;
       @location=L sds_kvf_put(name, name);
     }
   }

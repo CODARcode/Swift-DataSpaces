@@ -8,6 +8,7 @@ import io;
 import sds;
 import sys;
 
+printf("WORKFLOW: bench-1");
 printf("WORKERS=%i", turbine_workers());
 N = turbine_workers() * 10;
 printf("N=%i", N);

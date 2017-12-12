@@ -9,7 +9,7 @@ fi
 
 OUTPUT=$1
 
-for P in "Job ID" "^N=" "Elapsed"
+for P in "WORKFLOW:" "Job ID" "^N=" "Elapsed"
 do
   grep --max-count=1 "$P"  $OUTPUT 
 done
