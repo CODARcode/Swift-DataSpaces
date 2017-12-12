@@ -14,5 +14,9 @@ OUTPUT=$1
 
 for P in "WORKFLOW:" "Job ID" "^N=" "Elapsed"
 do
-  grep --max-count=1 "$P"  $OUTPUT 
+  if ! grep --max-count=1 "$P" $OUTPUT
+  then
+    echo "Error: Could not find pattern '$P'"
+    exit 1
+  fi
 done
