@@ -1,4 +1,3 @@
 #!/bin/sh
-echo "clean.sh" $( hostname ) $1
-rm -rfv $1
-
+# echo "clean.sh" $( hostname ) $1
+rm -rf $1
