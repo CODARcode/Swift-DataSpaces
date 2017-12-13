@@ -2,7 +2,7 @@
 set -eu
 
 # BENCH BLUES
-# Runs Swift/T bench-*.swift on Blues
+# Runs Swift/T T.swift on Blues
 # The user provides the test name and
 # sets env vars PROCS, DS_CLIENTS, and DS_SERVERS
 # such that PROCS = DS_CLIENTS + DS_SERVERS
@@ -49,9 +49,11 @@ then
   exit 1
 fi
 
+# For bench-2, we want to set -Fwait-coalesce to disable coalescing
 OPTZ=${OPTZ:-}
 
-# export TURBINE_LOG=1
+# Disable Turbine logging
+export TURBINE_LOG=0
 
 # Swift/T headers to check for updates
 UPTODATE=( -U sds.swift -U make_data.swift -U sink.swift )
