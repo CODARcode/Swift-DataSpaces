@@ -6,8 +6,10 @@
 # If you know what MPI you want to use:
 # CC = mpicc
 
-# On Blues:
-CC = /home/wozniak/Public/sfw/mpich-3.1.2/bin/mpicc
+# Blues:
+# CC = /home/wozniak/Public/sfw/mpich-3.1.2/bin/mpicc
+# Cori:
+CC = cc
 
 TCL_VERSION = 8.6
 
@@ -18,7 +20,7 @@ TCL_VERSION = 8.6
 # Blues:
 TCL_HOME = /home/wozniak/Public/sfw/tcl-8.6.4
 # Cori:
-# TCL_HOME = /global/u1/w/wozniak/Public/sfw/tcl-8.6.6
+TCL_HOME = /global/u1/w/wozniak/Public/sfw/tcl-8.6.6
 
 TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
 TCLSH = $(TCL_HOME)/bin/tclsh$(TCL_VERSION)
@@ -28,12 +30,25 @@ TCLSH = $(TCL_HOME)/bin/tclsh$(TCL_VERSION)
 # Theta:
 # DATASPACES = /home/wozniak/Public/sfw/theta/dataspaces-1.6.4
 # Blues:
-DATASPACES = /home/wozniak/sfw/blues/login/dataspaces-1.6.4
+# DATASPACES = /home/wozniak/sfw/blues/login/dataspaces-1.6.4
+# Cori:
+DATASPACES = /global/u1/w/wozniak/sfw/dataspaces-1.6.5
 
-CPPFLAGS = -I $(TCL_INCLUDE) -I $(DATASPACES)/include
+# Most machines:
+# CPPFLAGS = -I $(TCL_INCLUDE) -I $(DATASPACES)/include
+# CFLAGS = -fPIC
+# LINKFLAGS = -L $(DATASPACES)/lib -l dspaces -l dscommon \
+# 	-Wl,-rpath -Wl,$(DATASPACES)/lib
+
+# Cori:
+DS_C = $(DATASPACES)/bin/dspaces_config
+DSPACES_INC=$(shell $(DS_C) -c)
+DSPACES_LIB=$(shell $(DS_C) -l)
+
+CPPFLAGS = -I $(TCL_INCLUDE) $(DSPACES_INC)
 CFLAGS = -fPIC
-LINKFLAGS = -L $(DATASPACES)/lib -l dspaces -l dscommon \
-	-Wl,-rpath -Wl,$(DATASPACES)/lib
+LINKFLAGS = $(DSPACES_LIB) \
+    -Wl,-rpath -Wl,$(DATASPACES)/lib
 
 all: pkgIndex.tcl
 
