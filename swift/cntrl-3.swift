@@ -10,6 +10,7 @@ import sys;
 
 import make_data;
 
+printf("WORKFLOW: cntrl-3");
 printf("WORKERS=%i", turbine_workers());
 M = 10;
 printf("N=%i", M*turbine_workers());
@@ -19,7 +20,10 @@ printf("N=%i", M*turbine_workers());
   s = "data/f-%i-%i.txt" % (a,b);
 }
 
+// For 3a: d=1
+// For 3b: d=1024
 d = 1024;
+printf("DATA SIZE: %i", d);
 
 foreach j in [0:M-1]
 {

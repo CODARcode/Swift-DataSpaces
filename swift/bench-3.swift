@@ -28,7 +28,7 @@ MB = 1024*1024+1;
 
 // For 3a: d=1
 // For 3b: d=1024
-d = 1;
+d = 1024;
 printf("DATA SIZE: %i", d);
 
 int W[];
