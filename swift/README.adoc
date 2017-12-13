@@ -5,11 +5,11 @@ Use Swift/T branch "dataspaces"
 # DS_SERVERS is the dataspaces_server -s argument
 # DS_CLIENTS is the total number of Swift/T processes
 #    and the dataspaces_server -c argument
-export PROCS=3 ; export DS_SERVERS=1 DS_CLIENTS=$(( PROCS-DS_SERVERS ))
+export PROCS=3 DS_SERVERS=1 ; export DS_CLIENTS=$(( PROCS-DS_SERVERS ))
 
 To collect the output data:
 
-./bench-1-data.sh $( cat turbine-directory.txt )/out*.txt
+./data.sh $( cat turbine-directory.txt )/output.txt
 
 Bench/Cntrl 3a uses 1KB data
 Bench/Cntrl 3b uses 1MB data
