@@ -1,7 +1,13 @@
 
 # SDS MAKEFILE
 
-CC = mpicc
+# Be sure to use the same MPI for Swift/T and DataSpaces!
+
+# If you know what MPI you want to use:
+# CC = mpicc
+
+# On Blues:
+CC = /home/wozniak/Public/sfw/mpich-3.1.2/bin/mpicc
 
 TCL_VERSION = 8.6
 
@@ -11,6 +17,8 @@ TCL_VERSION = 8.6
 # TCL_HOME = /projects/Candle_ECP/swift/deps/tcl-8.6.6
 # Blues:
 TCL_HOME = /home/wozniak/Public/sfw/tcl-8.6.4
+# Cori:
+# TCL_HOME = /global/u1/w/wozniak/Public/sfw/tcl-8.6.6
 
 TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
 TCLSH = $(TCL_HOME)/bin/tclsh$(TCL_VERSION)
