@@ -20,7 +20,7 @@ MB = 1024*1024+1;
 
 foreach i in [0:N-1]
 {
-  sds_kv_put("key"+i, value)
+  sds_kv_put_sync("key"+i, value)
   =>
   sds_kv_get("key"+i, MB);
 }

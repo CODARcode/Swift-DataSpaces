@@ -2,13 +2,13 @@
 set -eu
 
 # BENCH BLUES
-# Runs Swift/T T.swift on Blues
+# Runs Swift/T bench-*.swift on Blues
 # The user provides the test name and
 # sets env vars PROCS, DS_CLIENTS, and DS_SERVERS
 # such that PROCS = DS_CLIENTS + DS_SERVERS
 # We use ZSH for an array convenience at the end
 
-if [ ${#*} != 1 ]
+if [ ${#*} != 3 ]
 then
   echo "Provide a test name!"
   exit 1
@@ -16,8 +16,14 @@ fi
 
 # Test name
 T=$1
+export DS_CLIENTS=$2
+export DS_SERVERS=$3
+((PROCS = $DS_CLIENTS + $DS_SERVERS))
+export PROCS
 
-echo "Running Swift/T test $T ..."
+export TURBINE_LAUNCH_OPTIONS="-n $DS_CLIENTS"
+
+echo "Running Swift/T test $T..."
 
 export THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 cd $THIS
@@ -49,11 +55,9 @@ then
   exit 1
 fi
 
-# For bench-2, we want to set -Fwait-coalesce to disable coalescing
 OPTZ=${OPTZ:-}
 
-# Disable Turbine logging
-export TURBINE_LOG=0
+# export TURBINE_LOG=1
 
 # Swift/T headers to check for updates
 UPTODATE=( -U sds.swift -U make_data.swift -U sink.swift )
@@ -61,7 +65,7 @@ UPTODATE=( -U sds.swift -U make_data.swift -U sink.swift )
 stc $OPTZ ${UPTODATE} $T.swift
 # Turbine will actually run on DS_CLIENTS processes!
 set -x
-turbine -m pbs -l \
+turbine -V -m slurm -l \
         -n $PROCS \
         -i $THIS/init-ds.sh \
         -e SDS_DEBUG \

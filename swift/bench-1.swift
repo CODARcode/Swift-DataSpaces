@@ -15,7 +15,7 @@ printf("N=%i", N);
 
 foreach i in [0:N-1]
 {
-  sds_kv_put("key"+i, "value1")
+  sds_kv_put("key"+i, "valueue1")
   =>
   sds_kv_get("key"+i, 100);
 }

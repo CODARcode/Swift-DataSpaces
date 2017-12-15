@@ -17,7 +17,7 @@ printf("N=%i", N);
 
 foreach i in [0:N-1]
 {
-  file f<"data/key"+i> = write("value1");
+  file f<"data/key"+i> = write("valueue1");
   string s = read(f);
   sink(s);
 }
