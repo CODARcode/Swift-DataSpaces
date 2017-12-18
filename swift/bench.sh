@@ -38,6 +38,7 @@ LLP=""
 # PATH=/soft/jdk/1.8.0_51/bin:$PATH
 # PATH=/home/wozniak/sfw/blues/login/swift-t-ds/stc/bin:$PATH
 MACHINE=( -m pbs )
+export PROJECT="Workflow"
 
 # Cori:
 # PATH=/home/wozniak/sfw/blues/login/swift-t-ds/turbine/bin:$PATH
