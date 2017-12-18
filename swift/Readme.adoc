@@ -183,6 +183,5 @@ or whatever output file you want to scan.
 
 === Note about data size
 
-Bench/Cntrl 3a uses 1KB data
-Bench/Cntrl 3b uses 1MB data
-
+* Bench/Cntrl 3a uses 1KB data
+* Bench/Cntrl 3b uses 1MB data
