@@ -130,6 +130,8 @@ sds_kvf_put(const char* var_name, const char* filename)
 
   rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
   CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
+
+  fclose(fp);
 }
 
 
@@ -166,6 +168,8 @@ sds_kvf_get(const char* var_name, int max_size, const char* filename)
   rc = fwrite(data, 1, length, fp);
   CHECK_MSG(rc = length,
             "sds_kvf_get(): short write: %s\n", filename);
+
+  fclose(fp);
 
   return length;
 }
