@@ -79,6 +79,18 @@ debugf(const char* format, ...)
 }
 
 void
+sds_kv_put_sync(const char* var_name, const char* data)
+{
+  debugf("sds_kv_put: %s=%s", var_name, data);
+  uint64_t bound = 0;
+  int size = strlen(data);
+  int rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
+  CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
+  rc = dspaces_put_sync();
+  CHECK_MSG(rc == 0, "dspaces_put_sync() failed!\n", var_name);
+}
+
+void
 sds_kv_put(const char* var_name, const char* data)
 {
   debugf("sds_kv_put: %s=%s", var_name, data);
@@ -118,6 +130,8 @@ sds_kvf_put(const char* var_name, const char* filename)
 
   rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
   CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
+
+  fclose(fp);
 }
 
 
@@ -154,6 +168,8 @@ sds_kvf_get(const char* var_name, int max_size, const char* filename)
   rc = fwrite(data, 1, length, fp);
   CHECK_MSG(rc = length,
             "sds_kvf_get(): short write: %s\n", filename);
+
+  fclose(fp);
 
   return length;
 }

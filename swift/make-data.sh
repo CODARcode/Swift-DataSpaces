@@ -20,6 +20,10 @@ fi
 N=$1
 OUTPUT=$2
 
+# echo "make-data.sh $OUTPUT"
+
+mkdir -p $( dirname $OUTPUT )
+
 C=$(( 1024 / 5 )) # Using 5-character integers
 
 {
