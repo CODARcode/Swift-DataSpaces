@@ -24,6 +24,13 @@ OUTPUT=$2
 
 mkdir -p $( dirname $OUTPUT )
 
+if ! touch $OUTPUT
+then
+  echo "Failed to touch $OUTPUT"
+  echo "Hostname: $(hostname)"
+  exit 1
+fi
+
 C=$(( 1024 / 5 )) # Using 5-character integers
 
 {
