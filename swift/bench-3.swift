@@ -21,9 +21,11 @@ printf("N=%i", M*turbine_workers());
 
 MB = 1024*1024+1;
 
+tmpdir = "/tmp/" + getenv("USER") + "/bench-3";
+
 (string s) make_filename(int a, int b)
 {
-  s = "/tmp/bench-3/f-%i-%i.txt" % (a,b);
+  s = tmpdir + "/f-%i-%i.txt" % (a,b);
 }
 
 // For 3a: d=1
@@ -49,7 +51,7 @@ foreach j in [0:M-1]
 
 app cleanup()
 {
-  (getenv("THIS")/"clean.sh") "/tmp/bench-3" ;
+  (getenv("THIS")/"clean.sh") tmpdir ;
 }
 
 wait (W)
