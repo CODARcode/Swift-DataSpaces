@@ -23,7 +23,7 @@ MB = 1024*1024+1;
 
 tmpdir = "/tmp/" + getenv("USER") + "/bench-3";
 
-(string s) make_filename(int a, int b)
+(string s) make_filename(string tmpdir, int a, int b)
 {
   s = tmpdir + "/f-%i-%i.txt" % (a,b);
 }
@@ -39,7 +39,7 @@ foreach j in [0:M-1]
   file D[];
   foreach r in [0:turbine_workers()-1]
   {
-    name = make_filename(j,r);
+    name = make_filename(tmpdir, j, r);
     location L = locationFromRank(r);
     file f<name> = @location=L make_data(d) => {
       D[r] = f;
@@ -49,7 +49,7 @@ foreach j in [0:M-1]
   wait (D) { W[j] = 0; }
 }
 
-app cleanup()
+app cleanup(string tmpdir)
 {
   (getenv("THIS")/"clean.sh") tmpdir ;
 }
@@ -58,6 +58,6 @@ wait (W)
 {
   foreach r in [0:turbine_workers()-1]
   {
-    @location=locationFromRank(r) cleanup();
+    @location=locationFromRank(r) cleanup(tmpdir);
   }
 }
