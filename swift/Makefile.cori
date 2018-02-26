@@ -1,0 +1,42 @@
+
+# SDS MAKEFILE for Cori
+
+# Use module PrgEnv-gnu
+
+CC = gcc
+
+TCL_VERSION = 8.6
+TCL_HOME    = /usr
+TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
+TCLSH = $(TCL_HOME)/bin/tclsh
+
+DSPACES = $(HOME)/sfw/dataspaces-1.6.5/bin
+DSPACES_CFG = $(DSPACES)/bin/dspaces_config
+
+DSPACES_INC=$(shell $(DSPACES_CFG) -c)
+DSPACES_LIB=$(shell $(DSPACES_CFG) -l)
+
+CPPFLAGS = -I $(TCL_INCLUDE) $(DSPACES_INC)
+CFLAGS = -fPIC
+LINKFLAGS = $(DSPACES_LIB) \
+    -Wl,-rpath -Wl,$(DSPACES)/lib
+
+all: pkgIndex.tcl
+
+sds_wrap.c: sds.i sds.h Makefile
+	swig -o $(@) $(<)
+
+sds_wrap.o sds.o: Makefile sds.h
+
+libsds.so: sds_wrap.o sds.o
+	$(CC) -shared -o $(@) $(^) \
+		$(LINKFLAGS)
+
+pkgIndex.tcl: libsds.so Makefile make-package.tcl
+	@echo TCLSH $(TCLSH)
+	LEAF_PKG=sds LEAF_VERSION=0.0 \
+	LEAF_SO=$(<) \
+	$(TCLSH) ./make-package.tcl > $(@)
+
+clean:
+	rm -fv pkgIndex.tcl *.so *.o *_wrap.c

@@ -71,17 +71,27 @@ A simple Swift/T file put/get test
 +make-data.sh+::
 Data file maker: see header for usage
 
-== Usage
+== Installation
 
-=== New Swift/T
+=== Cori
+
+==== DataSpaces
+
+. Obtain DataSpaces 1.6.5 from Wozniak or Davis.
+. Configure with:
++
+----
+./configure CC=cc FC=ftn CFLAGS=-fPIC \
+   --enable-drc --prefix=$HOME/dataspaces-1.6.5
+----
+. May turn on DEBUG in dart/debug.h
+
+==== Swift/T
 
 . You need Swift/T features as of 2017/12/05 (https://github.com/swift-lang/swift-t/commit/a5a9860afd9e178f0d056f4d7168964b8c9b9ba7[a5a9860a]). +
   If Swift/T is already installed, just pull and do +make install+
   for ADLB and Turbine.
-
-=== DataSpaces
-
-. May turn on DEBUG in dart/debug.h
+. Use Swift/T as described in the http://swift-lang.github.io/swift-t/sites.html#_cori[Swift/T Cori notes]
 
 === SDS
 
@@ -90,7 +100,7 @@ Data file maker: see header for usage
 . Run +./run-test-ds.sh+
 . Run +./run-test-sds.sh 1+
 
-== Transcripts
+== Usage transcripts
 
 === Swift/T test
 
