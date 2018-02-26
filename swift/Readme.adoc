@@ -88,10 +88,18 @@ Data file maker: see header for usage
 
 ==== Swift/T
 
+. There is a Swift/T branch called "dataspaces" that launches the
+  DataSpaces server when the Turbine job starts.   This uses environment
+  variables DS_SERVERS and DS_CLIENTS as described in the <<Plan>>
+. There is a public installation of Swift/T + DataSpaces at:
++
+----
+~wozniak/Public/sfw/compute/swift-t-ds
+----
 . You need Swift/T features as of 2017/12/05 (https://github.com/swift-lang/swift-t/commit/a5a9860afd9e178f0d056f4d7168964b8c9b9ba7[a5a9860a]). +
   If Swift/T is already installed, just pull and do +make install+
   for ADLB and Turbine.
-. Use Swift/T as described in the http://swift-lang.github.io/swift-t/sites.html#_cori[Swift/T Cori notes]
+. Or use Swift/T as described in the http://swift-lang.github.io/swift-t/sites.html#_cori[Swift/T Cori notes]
 
 === SDS
 
@@ -158,6 +166,7 @@ NOTE: Kill and restart the server after each test.
 
 == Benchmarks for report
 
+[[plan]]
 === Plan
 
 Use Swift/T branch "dataspaces"
@@ -181,9 +190,11 @@ $ export PROCS=3 DS_SERVERS=1 ; export DS_CLIENTS=$(( PROCS-DS_SERVERS ))
 ----
 then run with:
 ----
-$ bench-blues.sh bench-2
+$ ./bench-blues.sh bench-2
+# or
+$ ./bench-cori.sh bench-2
 ----
-or the whatever Swift script you want to run.
+or the whatever Swift script you want to run instead of bench-2.swift .
 
 To collect the output data, do:
 ----
