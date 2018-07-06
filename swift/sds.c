@@ -78,16 +78,29 @@ debugf(const char* format, ...)
   va_end(va);
 }
 
+static inline size_t roundup8(size_t n)
+{
+  size_t r = n % 8;
+  if (r == 0) return n;
+  return (n/8 + 1) * 8;
+}
+
 void
 sds_kv_put_sync(const char* var_name, const char* data)
 {
-  debugf("sds_kv_put: %s=%s", var_name, data);
+  debugf("sds_kv_put_sync: %s=%s", var_name, data);
   uint64_t bound = 0;
-  int size = strlen(data);
-  int rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
+  size_t size = strlen(data)+1;
+  size_t padded = roundup8(size);
+  char*  buffer = malloc(padded);
+  assert(buffer != NULL);
+  strcpy(buffer, data); // WARNING: end of buffer is uninitialized
+
+  int rc = dspaces_put(var_name, 0, padded, 1, &bound, &bound, buffer);
   CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
   rc = dspaces_put_sync();
   CHECK_MSG(rc == 0, "dspaces_put_sync() failed!\n", var_name);
+  free(buffer);
 }
 
 void
@@ -95,8 +108,14 @@ sds_kv_put(const char* var_name, const char* data)
 {
   debugf("sds_kv_put: %s=%s", var_name, data);
   uint64_t bound = 0;
-  int size = strlen(data);
-  int rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
+  size_t size = strlen(data)+1;
+
+  size_t padded = roundup8(size);
+  char*  buffer = malloc(padded);
+  assert(buffer != NULL);
+  strcpy(buffer, data); // WARNING: end of buffer is uninitialized
+
+  int rc = dspaces_put(var_name, 0, padded, 1, &bound, &bound, data);
   CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
 }
 
