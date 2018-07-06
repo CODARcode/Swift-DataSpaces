@@ -21,11 +21,10 @@ printf("N=%i", M*turbine_workers());
 
 MB = 1024*1024+1;
 
-tmpdir = "/tmp/" + getenv("USER") + "/bench-3";
+tmpdir = "/tmp" / getenv("USER") / "bench-3";
 
 (string s) make_filename(string tmpdir, int a, int b)
 {
-
   // s = tmpdir + "/f-%i-%i.txt" % (a,b);
   s = "/dev/shm/bench-3/f-%i-%i.txt" % (a,b);
 }
