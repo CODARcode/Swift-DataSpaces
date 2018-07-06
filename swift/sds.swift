@@ -28,6 +28,12 @@ sds_kvf_put(string key, string fname)
 [ "sds_kvf_put <<key>> <<fname>>" ];
 
 @dispatch=WORKER
+(void v)
+sds_kvf_put_sync(string key, string fname)
+"sds" "0.0"
+[ "sds_kvf_put_sync <<key>> <<fname>>" ];
+
+@dispatch=WORKER
 (string value)
 sds_kvf_get(string key, int max_size, string fname)
 "sds" "0.0"
