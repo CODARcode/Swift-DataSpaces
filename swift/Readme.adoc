@@ -103,10 +103,16 @@ Data file maker: see header for usage
 
 === SDS
 
+==== Plan
+
 . Edit Makefile to set Tcl and DataSpaces locations
 . Run +make+
 . Run +./run-test-ds.sh+
 . Run +./run-test-sds.sh 1+
+
+==== Cori
+
+Run +./build-cori.sh+
 
 == Usage transcripts
 
