@@ -9,6 +9,7 @@
 # Blues:
 # CC = /home/wozniak/Public/sfw/mpich-3.1.2/bin/mpicc
 # Cori:
+# Do: module swap PrgEnv-intel PrgEnv-gnu
 CC = cc
 
 TCL_VERSION = 8.6
@@ -18,9 +19,9 @@ TCL_VERSION = 8.6
 # Theta:
 # TCL_HOME = /projects/Candle_ECP/swift/deps/tcl-8.6.6
 # Blues:
-TCL_HOME = /home/wozniak/Public/sfw/tcl-8.6.4
+# TCL_HOME = /home/wozniak/Public/sfw/tcl-8.6.4
 # Cori:
-TCL_HOME = /global/u1/w/wozniak/Public/sfw/tcl-8.6.6
+TCL_HOME = /global/u1/w/wozniak/Public/sfw/tcl-8.6.6-cray
 
 TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
 TCLSH = $(TCL_HOME)/bin/tclsh$(TCL_VERSION)
@@ -32,16 +33,20 @@ TCLSH = $(TCL_HOME)/bin/tclsh$(TCL_VERSION)
 # Blues:
 # DATASPACES = /home/wozniak/sfw/blues/login/dataspaces-1.6.4
 # Cori:
-DATASPACES = /global/u1/w/wozniak/sfw/dataspaces-1.6.5
+# DATASPACES = /global/u1/w/wozniak/sfw/dataspaces-1.6.5
+# Or module load:
+# /project/projectdirs/m3084/pdavis/cori/sw/modulefiles/dataspaces/1.6.5-shared
 
 # Most machines:
 # CPPFLAGS = -I $(TCL_INCLUDE) -I $(DATASPACES)/include
 # CFLAGS = -fPIC
 # LINKFLAGS = -L $(DATASPACES)/lib -l dspaces -l dscommon \
-# 	-Wl,-rpath -Wl,$(DATASPACES)/lib
+#  	-Wl,-rpath -Wl,$(DATASPACES)/lib
 
 # Cori:
-DS_C = $(DATASPACES)/bin/dspaces_config
+# DS_C = $(DATASPACES)/bin/dspaces_config
+# or after module load:
+DS_C = dspaces_config
 DSPACES_INC=$(shell $(DS_C) -c)
 DSPACES_LIB=$(shell $(DS_C) -l)
 

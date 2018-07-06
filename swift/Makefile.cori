@@ -11,8 +11,13 @@ TCL_HOME    = /usr
 TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
 TCLSH = $(TCL_HOME)/bin/tclsh
 
-DSPACES_INC=$(shell dspaces_config -c)
-DSPACES_LIB=$(shell dspaces_config -l)
+# Should be in PATH via 'module load'
+DSPACES_CFG = dspaces_config
+
+DSPACES_INC=$(shell $(DSPACES_CFG) -c)
+DSPACES_LIB=$(shell $(DSPACES_CFG) -l)
+
+# $(warning $(DSPACES_INC))
 
 CPPFLAGS = -I $(TCL_INCLUDE) $(DSPACES_INC)
 CFLAGS = -fPIC
@@ -39,3 +44,7 @@ pkgIndex.tcl: libsds.so Makefile make-package.tcl
 
 clean:
 	rm -fv pkgIndex.tcl *.so *.o *_wrap.c
+
+# Local Variables:
+# mode: makefile;
+# End:
