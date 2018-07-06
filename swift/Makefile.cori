@@ -3,23 +3,22 @@
 
 # Use module PrgEnv-gnu
 
-CC = gcc
+# CC = gcc
+CC    = cc
 
 TCL_VERSION = 8.6
 TCL_HOME    = /usr
 TCL_INCLUDE = $(TCL_HOME)/include/tcl$(TCL_VERSION)
 TCLSH = $(TCL_HOME)/bin/tclsh
 
-DSPACES = $(HOME)/sfw/dataspaces-1.6.5/bin
-DSPACES_CFG = $(DSPACES)/bin/dspaces_config
-
-DSPACES_INC=$(shell $(DSPACES_CFG) -c)
-DSPACES_LIB=$(shell $(DSPACES_CFG) -l)
+DSPACES_INC=$(shell dspaces_config -c)
+DSPACES_LIB=$(shell dspaces_config -l)
 
 CPPFLAGS = -I $(TCL_INCLUDE) $(DSPACES_INC)
 CFLAGS = -fPIC
 LINKFLAGS = $(DSPACES_LIB) \
-    -Wl,-rpath -Wl,$(DSPACES)/lib
+    -Wl,-rpath -Wl,-L/project/projectdirs/m499/pdavis/cori/sw/dataspaces/service-dev/gnu/lib
+
 
 all: pkgIndex.tcl
 

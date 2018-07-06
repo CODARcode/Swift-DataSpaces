@@ -25,28 +25,34 @@ tmpdir = "/tmp/" + getenv("USER") + "/bench-3";
 
 (string s) make_filename(string tmpdir, int a, int b)
 {
-  s = tmpdir + "/f-%i-%i.txt" % (a,b);
+
+  // s = tmpdir + "/f-%i-%i.txt" % (a,b);
+  s = "/dev/shm/bench-3/f-%i-%i.txt" % (a,b);
 }
 
 // For 3a: d=1
 // For 3b: d=1024
-d = 1024;
+d = 1;
 printf("DATA SIZE: %i", d);
 
 int W[];
-foreach j in [0:M-1]
-{
-  file D[];
-  foreach r in [0:turbine_workers()-1]
-  {
-    name = make_filename(tmpdir, j, r);
-    location L = locationFromRank(r);
-    file f<name> = @location=L make_data(d) => {
-      D[r] = f;
-      @location=L sds_kvf_put(name, name);
+starttime = clock();
+wait(starttime) {
+    printf("Start time = %f", starttime);
+    foreach j in [0:M-1]
+    {
+        file D[];
+        foreach r in [0:turbine_workers()-1]
+        {
+            name = make_filename(j,r);
+            location L = locationFromRank(r);
+            file f<name> = @location=L make_data(d) => {
+                @location=L sds_kvf_put_sync(name, name) =>
+                    D[r] = f;
+            }
+        }
+        wait deep (D) { W[j] = 0; }
     }
-  }
-  wait (D) { W[j] = 0; }
 }
 
 app cleanup(string tmpdir)
@@ -54,10 +60,12 @@ app cleanup(string tmpdir)
   (getenv("THIS")/"clean.sh") tmpdir ;
 }
 
-wait (W)
+wait deep (W)
 {
   foreach r in [0:turbine_workers()-1]
   {
     @location=locationFromRank(r) cleanup(tmpdir);
   }
+  endtime = clock() =>
+    printf("end time = %f", endtime);
 }

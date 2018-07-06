@@ -131,7 +131,43 @@ sds_kvf_put(const char* var_name, const char* filename)
   rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
   CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
 
+
+
+  rc = dspaces_put_sync();
+  CHECK_MSG(rc == 0, "dspaces_put_sync() failed!\n");
   fclose(fp);
+}
+
+void
+sds_kvf_put_sync(const char* var_name, const char* filename)
+{
+  debugf("sds_kvf_put: %s=%s", var_name, filename);
+  uint64_t bound = 0;
+
+  // Stat
+  struct stat sb;
+  int rc;
+  rc = stat(filename, &sb);
+  CHECK_MSG(rc == 0, "sds_kvf_put(): could not stat: %s\n", filename);
+
+  // Check size
+  off_t max_size = INT_MAX;
+  CHECK_MSG(sb.st_size < max_size,
+             "sds_kvf_put(): file too big: %s\n", filename);
+
+  int size = (int) sb.st_size;
+
+  char* data = malloc(size);
+  assert(data != NULL);
+  FILE* fp = fopen(filename, "r");
+  CHECK_MSG(fp != NULL,
+            "sds_kvf_put(): could not open: %s\n", filename);
+  int count = fread(data, 1, size, fp);
+  CHECK_MSG(count == size,
+            "sds_kvf_put(): short read: %s (%i)\n", filename, count);
+
+  rc = dspaces_put(var_name, 0, size, 1, &bound, &bound, data);
+  CHECK_MSG(rc == 0, "dspaces_put(%s) failed!\n", var_name);
 }
 
 
